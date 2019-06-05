@@ -1,5 +1,0 @@
-numbers = input("Enter numbers separated by commas ")
-lst = numbers.split(",")
-tp = tuple(lst)
-print('list ',lst)
-print('tuple ',tp)
