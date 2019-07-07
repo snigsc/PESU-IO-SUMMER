@@ -40,8 +40,8 @@ def model(x, weights, bias):
 	return output_layer
 
 #Define Training and Testing Data
-train_X , train_Y = data_encode('C:\SNIGDHA\PESU\Summer 2019\PESU-IO-SUMMER\MY ANN\IRIS\iris_train.csv')
-test_X , test_Y = data_encode('C:\SNIGDHA\PESU\Summer 2019\PESU-IO-SUMMER\MY ANN\IRIS\iris_test.csv')
+train_X , train_Y = data_encode('iris_train.csv')
+test_X , test_Y = data_encode('iris_test.csv')
 
 
 #Parameters
