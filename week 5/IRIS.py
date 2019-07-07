@@ -48,9 +48,6 @@ test_X , test_Y = data_encode('C:\SNIGDHA\PESU\Summer 2019\PESU-IO-SUMMER\MY ANN
 learning_rate = 0.01
 training_epochs = 10000
 display_steps = 1000
-
-
-#Network parameters
 n_input = 4
 n_hidden = 10
 n_output = 3
@@ -61,17 +58,17 @@ Y = tf.placeholder("float", [None, n_output])
 		
 #Define Weights and Biases
 weights = {"hidden" : tf.Variable(tf.random_normal([n_input, n_hidden]), name="weight_hidden"),
-	       "output" : tf.Variable(tf.random_normal([n_hidden, n_output]), name="weight_output")}
+	   "output" : tf.Variable(tf.random_normal([n_hidden, n_output]), name="weight_output")}
 
 bias = {"hidden" : tf.Variable(tf.random_normal([n_hidden]), name="bias_hidden"),
         "output" : tf.Variable(tf.random_normal([n_output]), name="bias_output")}	
 
 #Define model
-pred = model(X, weights, bias) 
+prediction = model(X, weights, bias) 
 
 #Define cost function and optimizer
-cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=pred, labels=Y))
-optimizer = tf.train.AdamOptimizer(learning_rate).minimize(cost)
+cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=prediction, labels=Y))
+opt = tf.train.AdamOptimizer(learning_rate).minimize(cost)
 
 #Initialize global variables
 init = tf.global_variables_initializer()
@@ -81,12 +78,12 @@ with tf.Session() as sess:
 	sess.run(init)
 
 	for epoch in range(training_epochs):
-		_, c = sess.run([optimizer, cost], feed_dict={X: train_X, Y: train_Y})
+		_, c = sess.run([opt, cost], feed_dict={X: train_X, Y: train_Y})
 		if(epoch + 1) % display_steps == 0:
 			print ("Epoch: ", (epoch+1), "Cost: ", c)
 	
 	test_result = sess.run(pred, feed_dict={X: train_X})
-	correct_pred = tf.equal(tf.argmax(test_result, 1), tf.argmax(train_Y, 1))
+	correct_prediction = tf.equal(tf.argmax(test_result, 1), tf.argmax(train_Y, 1))
 
 	accuracy = tf.reduce_mean(tf.cast(correct_pred, "float"))
 	print ("Accuracy:", accuracy.eval({X: test_X, Y: test_Y}))
